@@ -4,7 +4,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-smart-gym-demo-key'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 
+                 'localhost',
+                 'https://smart-gym-backend-bvbj.onrender.com',
+                 '.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
