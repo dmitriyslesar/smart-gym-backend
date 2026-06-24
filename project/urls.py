@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from app.views import UserListView, UserProfileView, RegApiView, AuthApiView, OrderListApi, DeleteOrderApi
+from app.views import (
+    UserListView, UserProfileView, RegApiView, 
+    AuthApiView, OrderListApi, DeleteOrderApi, CreateOrderApi
+)
 from django.http import JsonResponse
-from app.views import CreateOrderApi
 
 def home_view(request):
     return JsonResponse({
@@ -19,6 +21,6 @@ urlpatterns = [
     path('register/', RegApiView.as_view()),
     path('login/', AuthApiView.as_view()),
     path('orders/', OrderListApi.as_view()),
-    path('orders/delete/<int:pk>/', DeleteOrderApi.as_view()),
     path('orders/create/', CreateOrderApi.as_view()),
+    path('orders/delete/<int:pk>/', DeleteOrderApi.as_view()),
 ]
