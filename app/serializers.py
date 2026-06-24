@@ -31,9 +31,7 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    user_email = serializers.CharField(
-        source='user.email'
-    )
+    user_email = serializers.CharField(source='user.email', read_only=True, default='')
 
     class Meta:
         model = Order

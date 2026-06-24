@@ -75,14 +75,7 @@ class AuthApiView(ObtainAuthToken):
                 'email': user.email,
             }
         )
-
-class OrderListApi(generics.ListAPIView):
-
-    queryset = Order.objects.all().order_by('-created_at')
-
-    serializer_class = OrderSerializer
-
-
+    
 class DeleteOrderApi(generics.DestroyAPIView):
 
     queryset = Order.objects.all()
