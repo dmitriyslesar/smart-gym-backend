@@ -17,4 +17,6 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view()),
     path('register/', RegApiView.as_view()),
     path('login/', AuthApiView.as_view()),
+    path('orders/', OrderListApi.as_view()),
+    path('orders/delete/<int:pk>/', DeleteOrderApi.as_view()),
 ]

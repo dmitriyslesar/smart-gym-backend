@@ -2,6 +2,50 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('Новый', 'Новый'),
+        ('Подтвержден', 'Подтвержден'),
+        ('Выполнен', 'Выполнен'),
+        ('Отменен', 'Отменен'),
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    total_price = models.IntegerField()
+
+    status = models.CharField(
+        max_length=30,
+        choices=STATUS_CHOICES,
+        default='Новый'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f'Заказ №{self.id}'
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+
+    product_name = models.CharField(max_length=255)
+
+    quantity = models.IntegerField()
+
+    price = models.IntegerField()
+
+    def __str__(self):
+        return self.product_name
 
 full_name_validator = RegexValidator(
     regex=r'^[\w.@+\- ]+\Z',

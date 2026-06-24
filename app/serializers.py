@@ -17,3 +17,25 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password'],
         )
+
+class OrderItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    items = OrderItemSerializer(
+        many=True,
+        read_only=True
+    )
+
+    user_email = serializers.CharField(
+        source='user.email'
+    )
+
+    class Meta:
+        model = Order
+        fields = '__all__'
