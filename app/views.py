@@ -5,10 +5,18 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from .models import User
 from .serializers import UserSerializer
+from rest_framework.permissions import IsAdminUser
+from .models import Order
+from .serializers import OrderSerializer
 
+class OrderListApi(generics.ListAPIView):
+
+    queryset = Order.objects.all().order_by('-created_at')
+    serializer_class = OrderSerializer
+
+    permission_classes = [IsAdminUser]
 
 class UserListView(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -80,3 +88,5 @@ class DeleteOrderApi(generics.DestroyAPIView):
     queryset = Order.objects.all()
 
     serializer_class = OrderSerializer
+
+    

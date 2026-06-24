@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from app.views import UserListView, UserProfileView, RegApiView, AuthApiView
+from app.views import UserListView, UserProfileView, RegApiView, AuthApiView, OrderListApi, DeleteOrderApi
 from django.http import JsonResponse
 
 def home_view(request):
