@@ -8,8 +8,34 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
 from rest_framework.permissions import IsAdminUser
-from .models import Order
 from .serializers import OrderSerializer
+from .models import Order, OrderItem
+
+class CreateOrderApi(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    def post(self, request):
+        data = request.data
+        items_data = data.get('items', [])
+        
+        # 1. Создаем сам заказ, привязывая его к текущему юзеру из токена
+        order = Order.objects.create(
+            user=request.user,
+            total_price=data.get('total_price', 0),
+            status='Новый'
+        )
+        
+        # 2. Создаем все элементы этого заказа
+        for item in items_data:
+            OrderItem.objects.create(
+                order=order,
+                product_name=item.get('product_name'),
+                quantity=item.get('quantity'),
+                price=item.get('price')
+            )
+            
+        return Response({"success": True, "order_id": order.id}, status=status.HTTP_201_CREATED)
 
 class OrderListApi(generics.ListAPIView):
 
